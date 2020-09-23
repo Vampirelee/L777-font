@@ -43,24 +43,23 @@
     }
 </script>
 <style scoped lang="scss">
-    @import "src/common/css/variable";
     .register-container{
-        width: 100%;
-        height: 100%;
-        background: url("../assets/bg.jpg") 0 0 no-repeat;
-        background-size: cover;
-        .register-box{
-            width: 500px;
-            height: 400px;
-            border-radius: 10px;
-            background-color: #fff;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            h1{
-                text-align: center;
-            }
-        }
-    }
+             width: 100%;
+             height: 100%;
+             background: url("../assets/bg.jpg") 0 0 no-repeat;
+             background-size: cover;
+             .register-box{
+                 width: 500px;
+                 height: 400px;
+                 border-radius: 10px;
+                 background-color: #fff;
+                 position: absolute;
+                 top: 50%;
+                 left: 50%;
+                 transform: translate(-50%, -50%);
+                 h1{
+                     text-align: center;
+                 }
+             }
+         }
 </style>

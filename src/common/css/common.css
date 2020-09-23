@@ -23,6 +23,19 @@
 .cur-p{
     cursor: pointer;
 }
+
+.mlr10{
+    margin: 0 10px;
+}
+.mlr15{
+    margin: 0 15px;
+}
+.mlr20{
+    margin: 0 20px;
+}
+.mlr30{
+    margin: 0 30px;
+}
 /* margin-left*/
 .ml10{
      margin-left: 10px;
@@ -36,6 +49,21 @@
 .ml30{
     margin-left: 30px;
 }
+
+/*padding-left-right*/
+.plr10{
+    padding:0 10px;
+}
+.plr15{
+    padding:0 15px;
+}
+.plr20{
+    padding:0 20px;
+}
+.plr30{
+    padding:0 30px;
+}
+/*padding-right*/
 /*padding-left*/
 .pl10{
     padding-left: 10px;

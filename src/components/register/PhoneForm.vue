@@ -49,7 +49,7 @@
 <script lang="ts">
     import {Component, Vue, Ref, Watch} from 'vue-property-decorator'
     import {Form} from 'element-ui'
-    import { registerUserApi, sendSmsApi } from '@/api/userApi'
+    import { registerUserApi, sendSmsApi } from '@/api/Api'
     // Define the component in class-style
     @Component({
         name: 'PhoneForm',

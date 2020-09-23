@@ -50,7 +50,7 @@
 <script lang="ts">
     import {Component, Vue, Ref} from 'vue-property-decorator'
     import {Form} from 'element-ui'
-    import { registerUserApi } from '@/api/userApi'
+    import { registerUserApi } from '@/api/Api'
     // Define the component in class-style
     @Component({
         name: 'NormalForm',
