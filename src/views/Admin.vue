@@ -1,11 +1,12 @@
 <template>
     <div class="admin">
-        用户管理页面
+        <el-button @click="getUsers">按钮</el-button>
     </div>
 </template>
 
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator'
+    import { getUser } from "@/api/Api";
 
     // Define the component in class-style
     @Component({
@@ -13,6 +14,13 @@
         components: {}
     })
     export default class Admin extends Vue {
-
+        getUsers() {
+            getUser().then( (data:any) => {
+                console.log(data);
+            })
+            .catch( (err:any) => {
+                console.log(err);
+            })
+        }
     }
 </script>

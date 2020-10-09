@@ -1,8 +1,16 @@
 <template>
     <div class="login-container">
         <div class="login-box">
-            <h1>欢迎登录</h1>
+            <h1 @click="isLogin">欢迎登录</h1>
             <LoginForm ref="LoginForm"></LoginForm>
+            <ul class="third-party-login">
+                <li class="third-party-item iconfont icon-qq" style="color: #68a5e1;"></li>
+                <li class="third-party-item iconfont icon-weixin" style="color: #46bb36;"></li>
+                <li class="third-party-item iconfont icon-weibo" style="color: #e95d5c;"></li>
+                <li class="third-party-item iconfont icon-github" @click="githubLogin" style="color: #666666;">
+                    <a href="http://127.0.0.1:7001/github"></a>
+                </li>
+            </ul>
         </div>
     </div>
 </template>
@@ -10,6 +18,7 @@
 <script lang="ts">
     import {Component, Vue} from 'vue-property-decorator'
     import LoginForm from "@/components/login/LoginForm.vue";
+    import {isLogin} from '../api/Api'
 
     // Define the component in class-style
     @Component({
@@ -19,7 +28,15 @@
         }
     })
     export default class Login extends Vue {
+        isLogin() {
+            isLogin().then( (data:any) => {
+                console.log(data);
+            })
+        }
+        // github第三方登录
+        githubLogin() {
 
+        }
     }
 </script>
 <style lang="scss" scoped>
@@ -41,6 +58,24 @@
                 text-align: center;
             }
 
+        }
+        .third-party-login{
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 40px;
+            .third-party-item{
+                font-size: 30px;
+                cursor: pointer;
+                position: relative;
+                a{
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                }
+            }
         }
     }
 </style>

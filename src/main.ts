@@ -4,7 +4,8 @@ import router from './router'
 import store from './store'
 import './plugins/element.js'
 import 'normalize.css'
-import './common/css/common.css'
+import '@css/common.css'
+import '@assets/iconfont/iconfont.css'
 
 Vue.config.productionTip = false;
 

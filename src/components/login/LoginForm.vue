@@ -110,6 +110,8 @@
                         .then((data: any) => {
                             if (data.code === 200 && data.isOk) {
                                 this.$message.success('登录成功');
+                                data = data.data;
+                                if (data.token) localStorage.setItem('token', data.token);
                                 this.$router.push('/admin');
                             } else {
                                 this.$message.error(data.msg);
