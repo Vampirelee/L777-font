@@ -1,12 +1,13 @@
 import axios from 'axios';
 
+
 axios.defaults.baseURL = 'http://127.0.0.1:7001';
 axios.defaults.timeout = 50000;
 axios.defaults.withCredentials = true;
 // Add a request interceptor
 axios.interceptors.request.use(function (config) {
     // Do something before request is sent
-    config.headers.Authorization = localStorage.getItem('token');
+    // config.headers.Authorization = localStorage.getItem('token');
     return config;
 }, function (error) {
     // Do something with request error

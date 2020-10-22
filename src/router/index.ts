@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
+import Cookies from "js-cookie";
 const Register = () => import('@/views/Register.vue');
 const Login = () => import('@/views/Login.vue');
 const Admin = () => import('@/views/Admin.vue');
+const Home = () => import('@/views/Home.vue');
 
 Vue.use(VueRouter);
 
@@ -22,6 +24,11 @@ const routes: Array<RouteConfig> = [
     name: 'Admin',
     component: Admin
   },
+  {
+    path: '/home',
+    name: 'Home',
+    component: Home
+  },
 
 ];
 
@@ -35,7 +42,8 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if (to.path === '/login' || to.path === '/register') return next();
 
-  const token = localStorage.getItem('token');
+  // const token = localStorage.getItem('token');
+  const token = Cookies.get('token');
   if (!token)  return next( {path: '/login'} );
   next()
 
