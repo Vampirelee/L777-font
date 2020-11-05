@@ -108,7 +108,8 @@
                     // 创建用户
                     LoginApi(this.LoginData)
                         .then((data: any) => {
-                            if (data.code === 200 && data.isOk) {
+                            console.log(data);
+                            if (data.data.code === 200) {
                                 this.$message.success('登录成功');
                                 // data = data.data;
                                 // if (data.token) localStorage.setItem('token', data.token);
@@ -118,8 +119,8 @@
                                 this.updateCaptcha();
                             }
                         })
-                        .catch((err: { message: string; }) => {
-                            this.$message.error(err.message)
+                        .catch((err: any) => {
+                            this.$message.error(err.response.data.msg)
                         })
 
                 } else {

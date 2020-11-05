@@ -8,7 +8,7 @@
                 <li class="third-party-item iconfont icon-weixin" style="color: #46bb36;"></li>
                 <li class="third-party-item iconfont icon-weibo" style="color: #e95d5c;"></li>
                 <li class="third-party-item iconfont icon-github" @click="githubLogin" style="color: #666666;">
-                    <a href="http://127.0.0.1:7001/github"></a>
+                    <a href="http://127.0.0.1:7001/passport/github"></a>
                 </li>
             </ul>
         </div>

@@ -1,13 +1,21 @@
 <template>
-    $END$
+    <div class="welcome">
+        欢迎页
+    </div>
 </template>
 
-<script>
-    export default {
-        name: "Welcome"
+<script lang="ts">
+    import { Component, Vue } from 'vue-property-decorator';
+    // Define the component in class-style
+    @Component({
+        name: 'Welcome',
+        components: {}
+    })
+    export default class Welcome extends Vue {
+
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 </style>

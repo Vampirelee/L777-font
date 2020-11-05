@@ -30,10 +30,10 @@ export default {
     get(url: string, params?: {}): any {
         return new Promise( (resolve, reject) => {
             axios.get(url, { params })
-                .then(function (response: any) {
-                    resolve(response.data)
+                .then(function (response) {
+                    resolve(response)
                 })
-                .catch(function (error: any) {
+                .catch(function (error) {
                     reject(error)
                 })
         });
@@ -41,13 +41,35 @@ export default {
     post(url: string, params?: {}): any {
         return new Promise((resolve, reject) => {
             axios.post(url, params)
-                .then(function (response: any) {
-                    resolve(response.data);
+                .then(function (response) {
+                    resolve(response);
                 })
-                .catch(function (error: any) {
+                .catch(function (error) {
                     reject(error)
                 });
         })
-    }
+    },
+    delete(url: string):any{
+        return new Promise((resolve, reject) => {
+            axios.delete(url)
+                .then(function (response) {
+                    resolve(response);
+                })
+                .catch(function (error) {
+                    reject(error)
+                });
+        })
+    },
+    put(url: string, params?: {}): any {
+        return new Promise((resolve, reject) => {
+            axios.put(url, params)
+                .then(function (response) {
+                    resolve(response);
+                })
+                .catch(function (error) {
+                    reject(error)
+                });
+        })
+    },
 }
 

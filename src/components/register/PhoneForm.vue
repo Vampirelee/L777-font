@@ -2,7 +2,7 @@
     <div class="register-form">
         <div class="input-container pr20">
             <el-form :model="registerData" :rules="registerRules" ref="registerForm">
-                <el-form-item label="" prop="email">
+                <el-form-item label="" prop="phone">
                     <el-input
                             placeholder="请输入手机号"
                             prefix-icon="el-icon-message"

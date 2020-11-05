@@ -5,6 +5,10 @@ const Register = () => import('@/views/Register.vue');
 const Login = () => import('@/views/Login.vue');
 const Admin = () => import('@/views/Admin.vue');
 const Home = () => import('@/views/Home.vue');
+const Right = () => import('@/components/admin/Right.vue');
+const Roles = () => import('@/components/admin/Roles.vue');
+const Users = () => import('@/components/admin/Users.vue');
+const Welcome = () => import('@/components/admin/Welcome.vue');
 
 Vue.use(VueRouter);
 
@@ -22,7 +26,14 @@ const routes: Array<RouteConfig> = [
   {
     path: '/admin',
     name: 'Admin',
-    component: Admin
+    redirect: '/welcome',
+    component: Admin,
+    children: [
+      { path: '/welcome', component: Welcome},
+      { path: '/right', component: Right},
+      { path: '/roles', component: Roles},
+      { path: '/users', component: Users},
+    ]
   },
   {
     path: '/home',
