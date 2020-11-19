@@ -97,7 +97,9 @@
                     <template slot-scope="scope">
                         <el-button size="mini" type="primary" icon="el-icon-edit" @click="showEditUserDialog(scope.row)"></el-button>
                         <el-button slot="reference" size="mini" type="danger" icon="el-icon-delete" @click="destroyUser(scope.row.id)"></el-button>
-                        <el-button size="mini" type="warning" icon="el-icon-setting"></el-button>
+                        <el-tooltip :enterable="false" effect="dark" content="分配角色" placement="top-start">
+                            <el-button size="mini" type="warning" icon="el-icon-setting" @click="openAddRoleDialog(scope.row)"></el-button>
+                        </el-tooltip>
                     </template>
                 </el-table-column>
 
@@ -214,12 +216,50 @@
                 <el-button type="primary" @click="dosureEditUser">确 定</el-button>
             </span>
         </el-dialog>
+
+        <!-- 分配角色弹窗 -->
+        <el-dialog
+                title="编辑用户"
+                :visible.sync="editRoleDialogVisible"
+                width="30%"
+        >
+            <el-form :model="editRoleData" ref="editRoleForm">
+                <el-form-item label="当前用户" prop="username">
+                    <el-input
+                            disabled
+                            prefix-icon="el-icon-message"
+                            v-model="editRoleData.username">
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="当前角色" prop="email">
+                    <el-input
+                            disabled
+                            prefix-icon="el-icon-message"
+                            v-model="editRoleData.role">
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="新的角色" prop="password">
+                    <el-select v-model="editRoleData.newRole" placeholder="请选择角色">
+                        <el-option
+                                v-for="item in roleLists"
+                                :key="item.id"
+                                :label="item.role_name"
+                                :value="item.id">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="editUserDialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="dosureEditUser">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 
 <script lang="ts">
     import {Component, Ref, Vue} from 'vue-property-decorator';
-    import {getUserApi, addUserApi, destroyUserUserApi, updateUserUserApi} from "@/api/Api";
+    import {getUserApi, addUserApi, destroyUserUserApi, updateUserUserApi, getRolesApi} from "@/api/Api";
     import {Form} from "element-ui";
     import XLSX from 'xlsx'
     import { saveAs } from 'file-saver';
@@ -232,6 +272,7 @@
         created(): void {
             this.getUserLists();
         }
+        private editRoleDialogVisible = false;
         private getUserLists() {
             getUserApi(this.searchData)
                 .then((res: any) => {
@@ -271,6 +312,12 @@
             email: '',
             password: '',
         };
+        private editRoleData = {
+            username: '',
+            role: '',
+            newRole: '',
+        };
+        private roleLists:any[] = [];
         private checkUsername(rule: any, value: string, callback: any) {
             let reg = /^[a-zA-Z0-9]{6,}$/;
             if (!value) {
@@ -332,6 +379,21 @@
                 {validator: this.checkAddUserPassword, trigger: 'blur'}
             ],
         };
+
+        private openAddRoleDialog(role:any) {
+            this.editRoleData.username = role.username;
+            this.editRoleData.role = role.role;
+            this.editRoleDialogVisible = true;
+            getRolesApi()
+                .then( (res:any) => {
+                    if (res.status === 200) {
+                        this.roleLists = res.data.data.rolesLists
+                    }
+                })
+                .catch((err:any) => {
+                    this.$message.error(err.response.data.msg);
+                });
+        }
 
 
         private editUserRules = {
@@ -433,6 +495,7 @@
                                 this.$message.success('添加用户成功');
                                 this.tableData.push(user);
                                 this.addUserDialogVisible = false;
+                                this.totalCount++;
                             }
                         })
                         .catch((err: any) => {

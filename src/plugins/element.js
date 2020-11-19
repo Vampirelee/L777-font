@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import { Button, Tabs, TabPane, Input, Row, Col, Checkbox, Form, FormItem, Message, CheckboxButton, Container, Header, Aside, Main, Menu, Submenu, MenuItem, MenuItemGroup,
-Breadcrumb, BreadcrumbItem, Card, Select, Option, Table, TableColumn, Switch, Pagination, Dialog, Popconfirm, Popover, MessageBox, Upload
+Breadcrumb, BreadcrumbItem, Card, Select, Option, Table, TableColumn, Switch, Pagination, Dialog, Popconfirm, Popover, MessageBox, Upload, Tooltip
 } from 'element-ui'
 
 Vue.use(Button);
@@ -34,6 +34,7 @@ Vue.use(Dialog);
 Vue.use(Popconfirm);
 Vue.use(Popover);
 Vue.use(Upload);
+Vue.use(Tooltip);
 
 
 // 注册Vue全局属性
