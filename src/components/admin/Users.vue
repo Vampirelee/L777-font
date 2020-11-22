@@ -81,6 +81,7 @@
                 </el-table-column>
                 <el-table-column
                         prop="roleName"
+                        :formatter="formatRoles"
                         label="角色">
                 </el-table-column>
                 <el-table-column label="状态">
@@ -219,7 +220,7 @@
 
         <!-- 分配角色弹窗 -->
         <el-dialog
-                title="编辑用户"
+                title="分配角色"
                 :visible.sync="editRoleDialogVisible"
                 width="30%"
         >
@@ -239,7 +240,7 @@
                     </el-input>
                 </el-form-item>
                 <el-form-item label="新的角色" prop="password">
-                    <el-select v-model="editRoleData.newRole" placeholder="请选择角色">
+                    <el-select v-model="editRoleData.roleId" placeholder="请选择角色">
                         <el-option
                                 v-for="item in roleLists"
                                 :key="item.id"
@@ -250,8 +251,9 @@
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="editUserDialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="dosureEditUser">确 定</el-button>
+                <el-button @click="editRoleDialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="dosureDeleteRole">删除角色</el-button>
+                <el-button type="primary" @click="dosureEditRole">添加角色</el-button>
             </span>
         </el-dialog>
     </div>
@@ -259,7 +261,7 @@
 
 <script lang="ts">
     import {Component, Ref, Vue} from 'vue-property-decorator';
-    import {getUserApi, addUserApi, destroyUserUserApi, updateUserUserApi, getRolesApi} from "@/api/Api";
+    import {getUserApi, addUserApi, destroyUserUserApi, updateUserUserApi, getRolesApi, dispatchRoleApi, deleteRoleApi} from "@/api/Api";
     import {Form} from "element-ui";
     import XLSX from 'xlsx'
     import { saveAs } from 'file-saver';
@@ -280,8 +282,15 @@
                     this.totalCount = res.data.data.totalCount;
                 })
                 .catch((err: any) => {
-                    (this as any).$message.error(err.response.data.msg);
+                    // (this as any).$message.error(err.response.data.msg);
                 })
+        }
+        private formatRoles(row:any) {
+            const roleArr:any[] = [];
+            row.roles.forEach((role:any) => {
+                roleArr.push(role.role_name);
+            })
+            return roleArr.join(' | ');
         }
         // 搜索条件
         private searchData = {
@@ -314,8 +323,9 @@
         };
         private editRoleData = {
             username: '',
+            userId: '',
             role: '',
-            newRole: '',
+            roleId: '',
         };
         private roleLists:any[] = [];
         private checkUsername(rule: any, value: string, callback: any) {
@@ -382,7 +392,8 @@
 
         private openAddRoleDialog(role:any) {
             this.editRoleData.username = role.username;
-            this.editRoleData.role = role.role;
+            if (role.roles && role.roles.length > 0) this.editRoleData.role = this.formatRoles(role);
+            this.editRoleData.userId = role.id;
             this.editRoleDialogVisible = true;
             getRolesApi()
                 .then( (res:any) => {
@@ -536,6 +547,37 @@
                     this.$message.error('编辑用户失败')
                 }
             });
+        }
+
+        // 确认分配角色
+        private dosureEditRole(){
+            const {userId, roleId} = this.editRoleData;
+            dispatchRoleApi({userId, roleId})
+                .then((res:any) => {
+                    if (res.status === 200) {
+                        this.getUserLists();
+                        this.$message.success('修改成功');
+                        this.editRoleDialogVisible = false;
+                    }
+                })
+                .catch((err:any) => {
+                    this.$message.error(err.response.data.msg);
+                })
+        }
+        // 删除角色
+        private dosureDeleteRole(){
+            const { userId, roleId } = this.editRoleData;
+            deleteRoleApi(userId + '', {roleId})
+                .then((res:any) => {
+                    if (res.status === 200) {
+                        this.$message.success('移除成功！')
+                        this.editRoleDialogVisible = false;
+                        this.getUserLists();
+                    }
+                })
+                .catch((err:any) => {
+                    console.log(err);
+                })
         }
 
         private updateUserState(user:any) {

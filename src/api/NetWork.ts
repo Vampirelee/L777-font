@@ -49,15 +49,15 @@ export default {
                 });
         })
     },
-    delete(url: string):any{
-        return new Promise((resolve, reject) => {
-            axios.delete(url)
+    delete: function (path = '', data = {}) {
+        return new Promise(function (resolve, reject) {
+            axios.delete(path, { data: data })
                 .then(function (response) {
-                    resolve(response);
+                    resolve(response)
                 })
                 .catch(function (error) {
                     reject(error)
-                });
+                })
         })
     },
     put(url: string, params?: {}): any {
