@@ -111,6 +111,7 @@
                             console.log(data);
                             if (data.data.code === 200) {
                                 this.$message.success('登录成功');
+                                window.sessionStorage.setItem('userInfo', JSON.stringify(data.data.data))
                                 // data = data.data;
                                 // if (data.token) localStorage.setItem('token', data.token);
                                 this.$router.push('/admin');

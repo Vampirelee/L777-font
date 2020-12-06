@@ -6,8 +6,8 @@
                     <img src="../assets/logo.png" alt="">
                 </h1>
                 <div class="account clearfix">
-                    <p class="avatar fl"><img src="../assets/lnj.jpg" alt=""></p>
-                    <span class="user-name fl">极客南江</span>
+                    <p class="avatar fl"><img :src="userInfo.baseUrl + userInfo.avatar_url" alt=""></p>
+                    <span class="user-name fl">{{userInfo.username || userInfo.email || userInfo.phone}}</span>
                     <el-button @click="logout" class="fl" style="margin-top: 15px;" size="mini">退出</el-button>
                 </div>
             </el-header>
@@ -19,14 +19,14 @@
                              @select="selectMenu"
                              router
                              class="el-menu-vertical-demo">
-                        <el-submenu :index="submenu.menuName" v-for="submenu in menus" :key="submenu.menuName">
+                        <el-submenu :index="submenu.rightsName" v-for="submenu in menus" :key="submenu.rightsName">
                             <template slot="title">
-                                <i :class="submenu.icon"></i>
-                                <span slot="title">{{submenu.menuName}}</span>
+                                <i class="el-icon-setting"></i>
+                                <span slot="title">{{submenu.rightsName}}</span>
                             </template>
-                            <el-menu-item :index="menuItem.path" v-for="menuItem in submenu.children" :key="menuItem.menuName">
+                            <el-menu-item :index="menuItem.rightsPath" v-for="menuItem in submenu.children" :key="menuItem.rightsName">
                                 <i class="el-icon-user"></i>
-                                <span>{{menuItem.menuName}}</span>
+                                <span>{{menuItem.rightsName}}</span>
                             </el-menu-item>
                         </el-submenu>
                     </el-menu>
@@ -53,13 +53,20 @@
         created():void {
             let path = this.$route.path;
             if (path !== '/welcome') (this as any).activeMenu = path;
+            this.userInfo = JSON.parse(window.sessionStorage.getItem('userInfo') || '{}');
+            this.userInfo.rightsTree.forEach((rights:any) => {
+              if (rights.rightsType === 'menu') {
+                this.menus = rights.children;
+              }
+            })
         }
+        private userInfo:any = {};
         private isCollapse = false;
         private toggleCollapse() {
             this.isCollapse = !this.isCollapse;
         }
         private activeMenu =  '';
-        private menus = [
+        private menus:any[] = [
             {
                 menuName:'用户管理',
                 path: '',
@@ -81,6 +88,7 @@
         private logout() {
             Cookies.remove('token');
             this.$router.push('/login');
+            window.sessionStorage.setItem('userInfo', '');
             (this as any).$message.warning('您已退出登录')
         }
         private selectMenu(index: string) {

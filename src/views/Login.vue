@@ -29,8 +29,8 @@
     })
     export default class Login extends Vue {
         isLogin() {
-            isLogin().then( (data:any) => {
-                console.log(data);
+            isLogin().then( (res:any) => {
+              console.log(res);
             })
         }
         // github第三方登录

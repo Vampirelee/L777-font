@@ -4,5 +4,7 @@ export * from './moduleApi/loginApi';
 export * from './moduleApi/test';
 export * from './moduleApi/roleApi';
 export * from './moduleApi/userRoleApi';
+export * from './moduleApi/rightsApi';
+export * from './moduleApi/roleRights';
 
 

@@ -576,7 +576,7 @@
                     }
                 })
                 .catch((err:any) => {
-                    console.log(err);
+                    this.$message.error(err.response.data.msg);
                 })
         }
 
