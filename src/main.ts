@@ -7,7 +7,7 @@ import 'normalize.css'
 import '@css/common.css'
 import '@assets/iconfont/iconfont.css'
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = false; // 开发提示
 
 new Vue({
   router,
